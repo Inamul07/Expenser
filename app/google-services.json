@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "495839779243",
+    "project_id": "expenser-47eb7",
+    "storage_bucket": "expenser-47eb7.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:495839779243:android:10672d0562d8ee5be41aee",
+        "android_client_info": {
+          "package_name": "com.inamul.expenser"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "495839779243-kp3bt4j36gida6t024l6ef1qb8kf1vc2.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.inamul.expenser",
+            "certificate_hash": "8b2b6de4a318a13cddde6bed0c169f395160c9f3"
+          }
+        },
+        {
+          "client_id": "495839779243-5jed43mqdded2mqcfcs8dujsh2dfujp4.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDH6j6Na2a9wmvqLhARANYErDVPu4hh5rc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "495839779243-5jed43mqdded2mqcfcs8dujsh2dfujp4.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

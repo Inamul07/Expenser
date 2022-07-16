@@ -13,6 +13,8 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
+import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Objects;
 
@@ -45,7 +47,10 @@ public class CreateLedgerActivity extends AppCompatActivity {
                     totalAmountText.setError("Amount cannot be empty");
                     totalAmountText.requestFocus();
                 } else {
-                    mDatabase.child(Objects.requireNonNull(mAuth.getUid())).child("Ledgers").child(ledgerName).setValue(totalAmount);
+                    Map<String, String> map = new LinkedHashMap<>();
+                    map.put("ledgerName", ledgerName);
+                    map.put("totalAmount", totalAmount);
+                    mDatabase.child(Objects.requireNonNull(mAuth.getUid())).child("ledgers").child(ledgerName).setValue(map);
                     Toast.makeText(CreateLedgerActivity.this, "Ledger Created Successfully", Toast.LENGTH_LONG).show();
                     Intent intent = new Intent(CreateLedgerActivity.this, HomeActivity.class);
                     startActivity(intent);

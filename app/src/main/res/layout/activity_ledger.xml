@@ -22,15 +22,30 @@
             android:textSize="30sp"
             android:textStyle="bold"/>
 
-        <TextView
-            android:id="@+id/remAmountText"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:gravity="center"
-            android:text="₹ 15000"
-            android:textStyle="bold"
-            android:textSize="70dp"
-            android:textColor="@color/orange_primary"/>
+            android:orientation="horizontal"
+            android:gravity="center">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="₹ "
+                android:textStyle="bold"
+                android:textSize="70sp"
+                android:textColor="@color/orange_primary"/>
+
+            <TextView
+                android:id="@+id/remAmountText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="15000"
+                android:textStyle="bold"
+                android:textSize="70sp"
+                android:textColor="@color/orange_primary"/>
+
+        </LinearLayout>
 
         <TextView
             android:layout_width="match_parent"

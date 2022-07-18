@@ -3,6 +3,7 @@ package com.inamul.expenser;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
@@ -10,6 +11,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.android.material.datepicker.MaterialDatePicker;
 import com.google.android.material.datepicker.MaterialPickerOnPositiveButtonClickListener;
@@ -38,10 +40,11 @@ public class ExpenseActivity extends AppCompatActivity {
 
         String type = getIntent().getStringExtra("TYPE");
         String ledgerName = getIntent().getStringExtra("LEDGER_NAME");
+        String amount = getIntent().getStringExtra("LEDGER_AMOUNT");
         Objects.requireNonNull(getSupportActionBar()).setTitle(ledgerName);
         mAuth = FirebaseAuth.getInstance();
 
-        databaseReference = FirebaseDatabase.getInstance().getReference(mAuth.getUid() + "/ledgers/" + ledgerName);
+        databaseReference = FirebaseDatabase.getInstance().getReference(Objects.requireNonNull(mAuth.getUid()));
 
         expenseTypeText = findViewById(R.id.expense_type);
         expenseTypeText.setText(type);
@@ -93,7 +96,22 @@ public class ExpenseActivity extends AppCompatActivity {
                     map.put("expenseName", expenseName);
                     map.put("expenseAmount", expenseAmount);
                     map.put("date", date);
-                    databaseReference.child("expenses").push().setValue(map);
+                    databaseReference.child("ledgers").child(ledgerName).child("expenses").push().setValue(map);
+                    Toast.makeText(ExpenseActivity.this, "Data added successfully", Toast.LENGTH_LONG).show();
+                    Intent intent = new Intent(ExpenseActivity.this, LedgerActivity.class);
+                    String balAmount = getIntent().getStringExtra("LEDGER_AMOUNT");
+                    if(type.equals("Credit")) {
+                        int remAmount = Integer.parseInt(balAmount) + Integer.parseInt(expenseAmount);
+                        balAmount = Integer.toString(remAmount);
+                    } else if(type.equals("Debit")) {
+                        int remAmount = Integer.parseInt(balAmount) - Integer.parseInt(expenseAmount);
+                        balAmount = Integer.toString(remAmount);
+                    }
+                    databaseReference.child("ledgers").child(ledgerName).child("totalAmount").setValue(balAmount);
+                    intent.putExtra("NAME", ledgerName);
+                    intent.putExtra("AMOUNT", balAmount);
+                    startActivity(intent);
+                    finish();
                 }
             }
         });

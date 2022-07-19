@@ -60,7 +60,6 @@ public class LedgerActivity extends AppCompatActivity {
         expenseList.setAdapter(expenseAdapter);
         String path = Objects.requireNonNull(mAuth.getUid()) + "/ledgers/" + ledgerName + "/expenses/";
         databaseReference = FirebaseDatabase.getInstance().getReference(path);
-        Log.d("PATH", path);
 
         remAmount.setText(totalAmount);
 
@@ -71,9 +70,6 @@ public class LedgerActivity extends AppCompatActivity {
                 list.clear();
                 for(DataSnapshot dataSnapshot: snapshot.getChildren()) {
                     Expense expense = dataSnapshot.getValue(Expense.class);
-                    assert expense != null;
-                    Log.d("LED", ledgerName);
-                    Log.d("TAG", expense.toString());
                     list.add(expense);
                 }
                 expenseAdapter.notifyDataSetChanged();

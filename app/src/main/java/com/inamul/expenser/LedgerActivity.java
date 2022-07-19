@@ -8,6 +8,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -25,7 +26,7 @@ import com.inamul.ledgers.RecyclerViewInterface;
 import java.util.ArrayList;
 import java.util.Objects;
 
-public class LedgerActivity extends AppCompatActivity implements RecyclerViewInterface {
+public class LedgerActivity extends AppCompatActivity {
 
     TextView remAmount;
     RecyclerView expenseList;
@@ -50,11 +51,16 @@ public class LedgerActivity extends AppCompatActivity implements RecyclerViewInt
         btnDebit = findViewById(R.id.btnDebit);
         expenseList = findViewById(R.id.expenseList);
         expenseList.setHasFixedSize(true);
-        expenseList.setLayoutManager(new LinearLayoutManager(LedgerActivity.this));
+        LinearLayoutManager layoutManager = new LinearLayoutManager(LedgerActivity.this);
+        layoutManager.setReverseLayout(true);
+        layoutManager.setStackFromEnd(true);
+        expenseList.setLayoutManager(layoutManager);
         list = new ArrayList<>();
-        expenseAdapter = new ExpenseAdapter(LedgerActivity.this, list, this);
+        expenseAdapter = new ExpenseAdapter(LedgerActivity.this, list);
         expenseList.setAdapter(expenseAdapter);
-        databaseReference = FirebaseDatabase.getInstance().getReference(Objects.requireNonNull(mAuth.getUid()) + "/ledgers/" + ledgerName + "/expenses");
+        String path = Objects.requireNonNull(mAuth.getUid()) + "/ledgers/" + ledgerName + "/expenses/";
+        databaseReference = FirebaseDatabase.getInstance().getReference(path);
+        Log.d("PATH", path);
 
         remAmount.setText(totalAmount);
 
@@ -65,6 +71,9 @@ public class LedgerActivity extends AppCompatActivity implements RecyclerViewInt
                 list.clear();
                 for(DataSnapshot dataSnapshot: snapshot.getChildren()) {
                     Expense expense = dataSnapshot.getValue(Expense.class);
+                    assert expense != null;
+                    Log.d("LED", ledgerName);
+                    Log.d("TAG", expense.toString());
                     list.add(expense);
                 }
                 expenseAdapter.notifyDataSetChanged();
@@ -99,11 +108,6 @@ public class LedgerActivity extends AppCompatActivity implements RecyclerViewInt
                 finish();
             }
         });
-
-    }
-
-    @Override
-    public void onItemClicked(int position) {
 
     }
 }

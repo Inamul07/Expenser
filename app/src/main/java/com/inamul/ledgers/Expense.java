@@ -1,38 +1,47 @@
 package com.inamul.ledgers;
 
 public class Expense {
+    String expenseName, expenseAmount, expenseType, date;
 
-    String name, amount, type;
-
-    public Expense() {  }
-
-    public Expense(String name, String amount, String type) {
-        this.name = name;
-        this.amount = amount;
-        this.type = type;
+    public Expense() {
     }
 
-    public String getName() {
-        return name;
+    public Expense(String expenseName, String expenseAmount, String expenseType, String date) {
+        this.expenseName = expenseName;
+        this.expenseAmount = expenseAmount;
+        this.expenseType = expenseType;
+        this.date = date;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public String getExpenseName() {
+        return expenseName;
     }
 
-    public String getAmount() {
-        return amount;
+    public void setExpenseName(String expenseName) {
+        this.expenseName = expenseName;
     }
 
-    public void setAmount(String amount) {
-        this.amount = amount;
+    public String getExpenseAmount() {
+        return expenseAmount;
     }
 
-    public String getType() {
-        return type;
+    public void setExpenseAmount(String expenseAmount) {
+        this.expenseAmount = expenseAmount;
     }
 
-    public void setType(String type) {
-        this.type = type;
+    public String getExpenseType() {
+        return expenseType;
+    }
+
+    public void setExpenseType(String expenseType) {
+        this.expenseType = expenseType;
+    }
+
+    public String getDate() {
+        return date;
+    }
+
+    public void setDate(String date) {
+        this.date = date;
     }
 }

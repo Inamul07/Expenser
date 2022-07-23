@@ -1,12 +1,13 @@
 package com.inamul.ledgers;
 
 public class Expense {
-    String expenseName, expenseAmount, expenseType, date;
+    String expenseName, expenseAmount, expenseType, date, key;
 
     public Expense() {
     }
 
-    public Expense(String expenseName, String expenseAmount, String expenseType, String date) {
+    public Expense(String expenseName, String expenseAmount, String expenseType, String date, String key) {
+        this.key = key;
         this.expenseName = expenseName;
         this.expenseAmount = expenseAmount;
         this.expenseType = expenseType;
@@ -43,5 +44,13 @@ public class Expense {
 
     public void setDate(String date) {
         this.date = date;
+    }
+
+    public String getKey() {
+        return key;
+    }
+
+    public void setKey(String key) {
+        this.key = key;
     }
 }

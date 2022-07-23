@@ -23,6 +23,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import java.util.Map;
 import java.util.Objects;
 import java.util.TreeMap;
+import java.util.UUID;
 
 public class ExpenseActivity extends AppCompatActivity {
 
@@ -92,11 +93,15 @@ public class ExpenseActivity extends AppCompatActivity {
                             .show();
                 } else {
                     Map<String, String> map = new TreeMap<>();
+
+                    // TODO: change everything back, with push() it works. Related -> (Expense.java, ExpenseAdapter.java, LedgerActivity.java)
+                    String key = UUID.randomUUID().toString();
+                    map.put("key", key);
                     map.put("expenseType", expenseType);
                     map.put("expenseName", expenseName);
                     map.put("expenseAmount", expenseAmount);
                     map.put("date", date);
-                    databaseReference.child("ledgers").child(ledgerName).child("expenses").push().setValue(map);
+                    databaseReference.child("ledgers").child(ledgerName).child("expenses").child(key).setValue(map);
                     Toast.makeText(ExpenseActivity.this, "Data added successfully", Toast.LENGTH_LONG).show();
                     Intent intent = new Intent(ExpenseActivity.this, LedgerActivity.class);
                     String balAmount = getIntent().getStringExtra("LEDGER_AMOUNT");

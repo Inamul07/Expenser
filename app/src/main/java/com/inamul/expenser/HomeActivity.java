@@ -2,6 +2,7 @@ package com.inamul.expenser;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -111,5 +112,19 @@ public class HomeActivity extends AppCompatActivity implements RecyclerViewInter
         intent.putExtra("AMOUNT", list.get(position).getTotalAmount());
 
         startActivity(intent);
+    }
+
+    @Override
+    public void onItemLongClicked(int position) {
+        String ledgerName = list.get(position).getLedgerName();
+        AlertDialog alertDialog = new MaterialAlertDialogBuilder(HomeActivity.this).setTitle("Delete " + ledgerName + " ?")
+                .setMessage("Once deleted your data cannot be retrieved")
+                .setPositiveButton("Ok", (dialog, which) -> {
+                    DatabaseReference ref = FirebaseDatabase.getInstance().getReference(mAuth.getUid() + "/ledgers/" + ledgerName);
+                    ref.removeValue();
+                    myAdapter.notifyItemRemoved(position);
+                }).setNegativeButton("Cancel", (dialog, which) -> {
+
+                }).show();
     }
 }

@@ -2,6 +2,7 @@ package com.inamul.ledgers;
 
 import android.content.Context;
 import android.graphics.Color;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -42,6 +43,7 @@ public class ExpenseAdapter extends RecyclerView.Adapter<ExpenseAdapter.MyViewHo
         holder.expenseNameText.setText(expense.getExpenseName());
         holder.expenseAmountText.setText(expense.getExpenseAmount());
         String type = expense.getExpenseType();
+        Log.d("EXPENSE OBJECT", expense.toString());
         if(type.equals("Credit")) {
             holder.expenseAmountSign.setText("+ ");
             holder.expenseAmountText.setTextColor(Color.GREEN);

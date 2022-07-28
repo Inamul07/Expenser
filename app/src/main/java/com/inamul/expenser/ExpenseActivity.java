@@ -45,7 +45,7 @@ public class ExpenseActivity extends AppCompatActivity {
         Objects.requireNonNull(getSupportActionBar()).setTitle(ledgerName);
         mAuth = FirebaseAuth.getInstance();
 
-        databaseReference = FirebaseDatabase.getInstance().getReference(Objects.requireNonNull(mAuth.getUid()));
+        databaseReference = FirebaseDatabase.getInstance().getReference(Objects.requireNonNull(mAuth.getUid()) + "/ledgers/" + ledgerName);
 
         expenseTypeText = findViewById(R.id.expense_type);
         expenseTypeText.setText(type);
@@ -95,13 +95,14 @@ public class ExpenseActivity extends AppCompatActivity {
                     Map<String, String> map = new TreeMap<>();
 
                     // TODO: change everything back, with push() it works. Related -> (Expense.java, ExpenseAdapter.java, LedgerActivity.java)
-                    String key = UUID.randomUUID().toString();
+                    String key = databaseReference.child("expenses").push().getKey();
                     map.put("key", key);
                     map.put("expenseType", expenseType);
                     map.put("expenseName", expenseName);
                     map.put("expenseAmount", expenseAmount);
                     map.put("date", date);
-                    databaseReference.child("ledgers").child(ledgerName).child("expenses").child(key).setValue(map);
+                    assert key != null;
+                    databaseReference.child("expenses").child(key).setValue(map);
                     Toast.makeText(ExpenseActivity.this, "Data added successfully", Toast.LENGTH_LONG).show();
                     Intent intent = new Intent(ExpenseActivity.this, LedgerActivity.class);
                     String balAmount = getIntent().getStringExtra("LEDGER_AMOUNT");
@@ -112,7 +113,7 @@ public class ExpenseActivity extends AppCompatActivity {
                         int remAmount = Integer.parseInt(balAmount) - Integer.parseInt(expenseAmount);
                         balAmount = Integer.toString(remAmount);
                     }
-                    databaseReference.child("ledgers").child(ledgerName).child("totalAmount").setValue(balAmount);
+                    databaseReference.child("totalAmount").setValue(balAmount);
                     intent.putExtra("NAME", ledgerName);
                     intent.putExtra("AMOUNT", balAmount);
                     startActivity(intent);

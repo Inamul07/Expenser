@@ -55,8 +55,8 @@ public class LedgerActivity extends AppCompatActivity implements RecyclerViewInt
         expenseList = findViewById(R.id.expenseList);
         expenseList.setHasFixedSize(true);
         LinearLayoutManager layoutManager = new LinearLayoutManager(LedgerActivity.this);
-//        layoutManager.setReverseLayout(true);
-//        layoutManager.setStackFromEnd(true);
+        layoutManager.setReverseLayout(true);
+        layoutManager.setStackFromEnd(true);
         expenseList.setLayoutManager(layoutManager);
         list = new ArrayList<>();
         expenseAdapter = new ExpenseAdapter(LedgerActivity.this, list, this);
@@ -121,8 +121,7 @@ public class LedgerActivity extends AppCompatActivity implements RecyclerViewInt
         new MaterialAlertDialogBuilder(LedgerActivity.this).setTitle("Delete Record ?")
                 .setMessage("Once deleted, the data cannot be retrieved")
                 .setPositiveButton("Ok", (dialog, which) -> {
-                    DatabaseReference ref = FirebaseDatabase.getInstance().getReference(mAuth.getUid() + "/" + ledgerName + "/expenses/" + key);
-                    ref.removeValue();
+                    FirebaseDatabase.getInstance().getReference(mAuth.getUid() + "/" + ledgerName + "/" + key).removeValue();
                     expenseAdapter.notifyItemRemoved(position);
                 })
                 .setNegativeButton("Cancel", (dialog, which) -> {

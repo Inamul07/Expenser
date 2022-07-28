@@ -6,7 +6,7 @@ public class Expense {
     public Expense() {
     }
 
-    public Expense(String expenseName, String expenseAmount, String expenseType, String date, String key) {
+    public Expense(String key, String expenseName, String expenseAmount, String expenseType, String date) {
         this.key = key;
         this.expenseName = expenseName;
         this.expenseAmount = expenseAmount;
@@ -52,5 +52,16 @@ public class Expense {
 
     public void setKey(String key) {
         this.key = key;
+    }
+
+    @Override
+    public String toString() {
+        return "Expense{" +
+                "expenseName='" + expenseName + '\'' +
+                ", expenseAmount='" + expenseAmount + '\'' +
+                ", expenseType='" + expenseType + '\'' +
+                ", date='" + date + '\'' +
+                ", key='" + key + '\'' +
+                '}';
     }
 }
